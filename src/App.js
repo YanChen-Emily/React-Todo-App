@@ -1,49 +1,30 @@
 import React, { useState } from "react";
 import Form from "./components/Form";
-import FilterButton from "./components/FilterButton";
-import Todo from "./components/Todo";
-import { FILTER_MAP, FILTER_NAMES, addTask, toggleTaskCompleted, deleteTask, editTask } from "./components/Main";
-import { Detail } from './components/pages/Detail';
-import { Home } from './components/pages/Home';
+import FilterList from "./components/FilterList";
+import { TaskList}  from "./components/TaskList";
 import { nanoid } from "nanoid";
-import { routes } from "./components/routes";
-import { Routes, Route, Navigate, BrowserRouter, useNavigate } from "react-router-dom";
+import HeadingText from "./components/HeadingText";
 
 function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
   const [filter, setFilter] = useState('All');
-  const taskList = tasks.filter(FILTER_MAP[filter])
-  .map(task => (
-  <Todo
-   id={task.id}
-   name={task.name}
-   completed={task.completed}
-   key={task.id}
-   toggleTaskCompleted={toggleTaskCompleted}
-   deleteTask={deleteTask}
-   editTask={editTask}
-  />
-  ));
-  const filterList = FILTER_NAMES.map(name => (
-    <FilterButton
-      key={name}
-      name={name}
-      isPressed={name === filter}
-      setFilter={setFilter}
-    />
-    ));
-  const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
-  const headingText = `${taskList.length} ${tasksNoun} remaining`;
+  
+  function addTask(name) {
+      const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
+      setTasks([...tasks, newTask]);
+    }
   
   return (
     <div className="todoapp stack-large">
       <h1>Todo List</h1>
-      <Form addTask={addTask} />
+      <Form 
+      setTasks = {setTasks}
+      addTask={addTask} /> 
       <div className="filters btn-group stack-exception">
-      {filterList}
+      <FilterList tasks={tasks} setFilter={setFilter}  filter={filter}/>
       </div>
       <h2 id="list-heading">
-        {headingText} 
+         <HeadingText tasks={tasks} setTasks={setTasks} filter={filter}/>
       </h2>
       <div className="main">
       <ul
@@ -51,12 +32,8 @@ function App(props) {
       className="todo-list stack-large stack-exception"
       aria-labelledby="list-heading"
       >
-        {taskList}
+        <TaskList tasks={tasks} setTasks={setTasks} filter={filter}/>
       </ul>
-      <Routes>
-          <Route path="/" element={<Home />}/>
-          <Route path="/detail" element={<Detail />}/>
-      </Routes>
      </div>
     </div>
   );

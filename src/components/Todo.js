@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-//import { Link, Route, Routes } from 'react-router-dom';
-import { Detail } from "./pages/Detail";
 import { Link, Outlet } from 'react-router-dom';
 
 
@@ -57,10 +55,9 @@ export default function Todo(props) {
               />
               <label className="todo-label" htmlFor={props.id}>
               <nav>
-              <Link to={'detail'}>{props.name}</Link>
+              <Link to={`${props.name}`} target="_blank">{props.name}</Link>
               </nav>
               </label>
-              <hr />
               <Outlet />
             </div>
             

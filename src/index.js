@@ -2,12 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
 import reportWebVitals from './reportWebVitals';
 import  { BrowserRouter } from "react-router-dom";
-import Detail from "./components/pages/Detail";
-
-
+import { Route, Routes} from 'react-router-dom';
+import Detail from './components/pages/Detail';
 
 const DATA = [
   { id: "todo-0", name: "Eat", completed: true },
@@ -15,18 +13,16 @@ const DATA = [
   { id: "todo-2", name: "Repeat", completed: false }
 ];
 
-// const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })
-
-
-
 ReactDOM.render(
   <React.StrictMode>
   <BrowserRouter>
-  <App tasks={DATA}/>
-  </BrowserRouter>,
+  <Routes>
+      <Route path="/" element={<App tasks={DATA} />}/>
+      <Route path="/:task" element={<Detail/>}/>
+  </Routes>
+  </BrowserRouter>
   </React.StrictMode>, 
   document.getElementById('root')
-  
 );
 
 reportWebVitals();

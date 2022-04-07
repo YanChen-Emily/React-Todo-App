@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-// import Todo from "./Todo";
-// import FilterButton from "./FilterButton";
-// import { routes }  from "./routes";
 import { nanoid } from "nanoid";
 
 export const FILTER_MAP = {
